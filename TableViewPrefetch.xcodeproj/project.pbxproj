@@ -64,10 +64,11 @@
 		2F10E0B021BAE8C700F57B85 /* TableViewPrefetch */ = {
 			isa = PBXGroup;
 			children = (
-				6E8339132349822C000358D4 /* Helper */,
+				6E83391E234997D7000358D4 /* Service */,
 				2F10E0C521BAE8F900F57B85 /* Models */,
 				2F10E0C421BAE8F100F57B85 /* Views */,
 				2F10E0C321BAE8D800F57B85 /* Controllers */,
+				6E8339132349822C000358D4 /* Helper */,
 				2F10E0C621BAE91200F57B85 /* Resources */,
 			);
 			path = TableViewPrefetch;
@@ -93,7 +94,6 @@
 		2F10E0C521BAE8F900F57B85 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2F10E0C921BAE9E100F57B85 /* RobohashService.swift */,
 				2F10E0CB21BAEA2000F57B85 /* Robohash.swift */,
 				6E83390D2349818E000358D4 /* DataLoadOperation.swift */,
 			);
@@ -133,6 +133,14 @@
 				6E83391223498225000358D4 /* Extensions */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		6E83391E234997D7000358D4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E0C921BAE9E100F57B85 /* RobohashService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
