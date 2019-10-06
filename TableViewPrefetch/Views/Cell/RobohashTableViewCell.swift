@@ -10,12 +10,18 @@ import UIKit
 
 internal class RobohashTableViewCell: UITableViewCell {
 
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var thumbImageView: UIImageView!
-    
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureImageShadow()
+    }
+
     internal func updateAppearanceFor(_ image: UIImage?) {
-        DispatchQueue.main.async { [unowned self] in
-            self.displayImage(image)
+        DispatchQueue.main.async { [weak self] in
+            self?.displayImage(image)
         }
     }
     
@@ -27,5 +33,18 @@ internal class RobohashTableViewCell: UITableViewCell {
             loadingIndicator.startAnimating()
             thumbImageView.image = .none
         }
+    }
+
+    private func configureImageShadow() {
+        containerView.layer.cornerRadius = 134.5
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
+        containerView.layer.shadowRadius = 25.0
+        containerView.layer.shadowOpacity = 0.9
+        containerView.layer.shadowPath = UIBezierPath(roundedRect: thumbImageView.bounds,
+                                                      cornerRadius: 134.5).cgPath
+
+        thumbImageView.layer.cornerRadius = 134.5
+        thumbImageView.clipsToBounds = true
     }
 }
