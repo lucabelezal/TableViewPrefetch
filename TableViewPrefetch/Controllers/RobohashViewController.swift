@@ -40,13 +40,13 @@ extension RobohashViewController: UITableViewDelegate {
         }
 
         let updateCellClosure: (UIImage?) -> Void = { [weak self] (image) in
-            cell.updateAppearanceFor(image)
+            cell.configureCell(with: image)
             self?.operations.removeValue(forKey: indexPath)
         }
 
         if let operation = operations[indexPath] {
             if let image = operation.image {
-                cell.updateAppearanceFor(image)
+                cell.configureCell(with: image)
                 operations.removeValue(forKey: indexPath)
             } else {
                 operation.completeHandler = updateCellClosure
@@ -77,12 +77,12 @@ extension RobohashViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as? RobohashTableViewCell else {
+        let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
+        guard let cell = reusableCell as? RobohashTableViewCell else {
             fatalError("Sorry, could not load cell")
         }
         cell.selectionStyle = .none
-        cell.updateAppearanceFor(.none)
+        cell.configureCell(with: .none)
         return cell
     }
 }

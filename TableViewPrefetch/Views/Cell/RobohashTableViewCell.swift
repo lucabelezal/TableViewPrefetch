@@ -19,7 +19,7 @@ internal class RobohashTableViewCell: UITableViewCell {
         configureImageShadow()
     }
 
-    internal func updateAppearanceFor(_ image: UIImage?) {
+    internal func configureCell(with image: UIImage?) {
         DispatchQueue.main.async { [weak self] in
             self?.displayImage(image)
         }
