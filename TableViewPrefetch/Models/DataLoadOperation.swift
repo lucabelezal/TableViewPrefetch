@@ -11,12 +11,12 @@ import UIKit.UIImage
 
 internal class DataLoadOperation: Operation {
 
-    internal var image: UIImage?
-    internal var loadingCompleteHandler: ((UIImage?) -> Void)?
-    private var imageModel: Robohash
+    internal var completeHandler: ((UIImage?) -> Void)?
+    internal private(set) var image: UIImage?
+    private var robohash: Robohash
 
-    internal init(_ imageModel: Robohash) {
-        self.imageModel = imageModel
+    internal init(robohash: Robohash) {
+        self.robohash = robohash
     }
 
     override func main() {
@@ -25,7 +25,7 @@ internal class DataLoadOperation: Operation {
             return
         }
 
-        guard let url = imageModel.url else {
+        guard let url = robohash.url else {
             return
         }
 
@@ -42,7 +42,7 @@ internal class DataLoadOperation: Operation {
                 }
 
                 self.image = image
-                self.loadingCompleteHandler?(self.image)
+                self.completeHandler?(self.image)
             }
         }
     }
