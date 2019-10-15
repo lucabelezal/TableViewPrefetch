@@ -28,6 +28,27 @@ internal class RobohashViewController: UIViewController {
         tableView.prefetchDataSource = self
     }
 
+    private func loadData(at indexPath: IndexPath, for cell: RobohashTableViewCell) {
+
+        let updateCell: (UIImage?) -> Void = { [weak self] (image) in
+            self?.update(cell, with: image, at: indexPath)
+        }
+
+        if let data = images[indexPath] {
+            if let image = data.image {
+                update(cell, with: image, at: indexPath)
+            } else {
+                data.updateCell = updateCell
+            }
+        } else {
+            prefetchData(at: indexPath)
+
+            if let data = images[indexPath] {
+                data.updateCell = updateCell
+            }
+        }
+    }
+
     private func update(_ cell: RobohashTableViewCell, with image: UIImage?, at indexPath: IndexPath) {
         cell.configureCell(with: image)
         images.removeValue(forKey: indexPath)
@@ -58,23 +79,7 @@ extension RobohashViewController: UITableViewDelegate {
             return
         }
 
-        let updateCell: (UIImage?) -> Void = { [weak self] (image) in
-            self?.update(cell, with: image, at: indexPath)
-        }
-
-        if let data = images[indexPath] {
-            if let image = data.image {
-                update(cell, with: image, at: indexPath)
-            } else {
-                data.updateCell = updateCell
-            }
-        } else {
-            prefetchData(at: indexPath)
-
-            if let data = images[indexPath] {
-                data.updateCell = updateCell
-            }
-        }
+        loadData(at: indexPath, for: cell)
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

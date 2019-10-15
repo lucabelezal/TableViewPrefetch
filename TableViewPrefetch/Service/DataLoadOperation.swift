@@ -30,19 +30,9 @@ internal class DataLoadOperation: Operation {
         }
 
         downloadImageFrom(url) { (image) in
-
             DispatchQueue.main.async { [weak self] in
-
-                guard let `self` = self else {
-                    return
-                }
-
-                if self.isCancelled {
-                    return
-                }
-
-                self.image = image
-                self.updateCell?(self.image)
+                self?.image = image
+                self?.updateCell?(image)
             }
         }
     }
