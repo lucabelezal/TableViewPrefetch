@@ -12,9 +12,9 @@ internal class RobohashViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
 
-    private lazy var service = RobohashService()
     private lazy var operationQueue = OperationQueue()
-    private lazy var operations = [IndexPath: DataLoadOperation]()
+    private lazy var images = [IndexPath: DataLoadOperation]()
+    private lazy var service = RobohashService()
     private lazy var cellIdentifier =  "imageCell"
 
     override func viewDidLoad() {
@@ -26,6 +26,25 @@ internal class RobohashViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
+    }
+
+    private func update(_ cell: RobohashTableViewCell, with image: UIImage?, at indexPath: IndexPath) {
+        cell.configureCell(with: image)
+        images.removeValue(forKey: indexPath)
+    }
+
+    private func cancelPrefetching(at indexPath: IndexPath) {
+        if let data = images[indexPath] {
+            data.cancel()
+            images.removeValue(forKey: indexPath)
+        }
+    }
+
+    private func prefetchData(at indexPath: IndexPath) {
+        if let data = service.loadImage(at: indexPath.row) {
+            operationQueue.addOperation(data)
+            images[indexPath] = data
+        }
     }
 }
 
@@ -39,32 +58,27 @@ extension RobohashViewController: UITableViewDelegate {
             return
         }
 
-        let updateCellClosure: (UIImage?) -> Void = { [weak self] (image) in
-            cell.configureCell(with: image)
-            self?.operations.removeValue(forKey: indexPath)
+        let updateCell: (UIImage?) -> Void = { [weak self] (image) in
+            self?.update(cell, with: image, at: indexPath)
         }
 
-        if let operation = operations[indexPath] {
-            if let image = operation.image {
-                cell.configureCell(with: image)
-                operations.removeValue(forKey: indexPath)
+        if let data = images[indexPath] {
+            if let image = data.image {
+                update(cell, with: image, at: indexPath)
             } else {
-                operation.completeHandler = updateCellClosure
+                data.updateCell = updateCell
             }
         } else {
-            if let operation = service.loadImage(at: indexPath.row) {
-                operation.completeHandler = updateCellClosure
-                operationQueue.addOperation(operation)
-                operations[indexPath] = operation
+            prefetchData(at: indexPath)
+
+            if let data = images[indexPath] {
+                data.updateCell = updateCell
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let operation = operations[indexPath] {
-            operation.cancel()
-            operations.removeValue(forKey: indexPath)
-        }
+        cancelPrefetching(at: indexPath)
     }
 }
 
@@ -77,10 +91,9 @@ extension RobohashViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        guard let cell = reusableCell as? RobohashTableViewCell else {
-            fatalError("Sorry, could not load cell")
-        }
+        guard let cell = reusableCell as? RobohashTableViewCell else { fatalError("Sorry, could not load cell") }
         cell.selectionStyle = .none
         cell.configureCell(with: .none)
         return cell
@@ -93,25 +106,15 @@ extension RobohashViewController: UITableViewDataSourcePrefetching {
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
 
-        for indexPath in indexPaths {
-            if operations[indexPath] != nil {
-                return
-            }
-
-            if let operation = service.loadImage(at: indexPath.row) {
-                operationQueue.addOperation(operation)
-                operations[indexPath] = operation
-            }
+        for indexPath in indexPaths where images[indexPath] != nil {
+            prefetchData(at: indexPath)
         }
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
 
         for indexPath in indexPaths {
-            if let operation = operations[indexPath] {
-                operation.cancel()
-                operations.removeValue(forKey: indexPath)
-            }
+            cancelPrefetching(at: indexPath)
         }
     }
 }

@@ -11,7 +11,7 @@ import UIKit.UIImage
 
 internal class DataLoadOperation: Operation {
 
-    internal var completeHandler: ((UIImage?) -> Void)?
+    internal var updateCell: ((UIImage?) -> Void)?
     internal private(set) var image: UIImage?
     private var robohash: Robohash
 
@@ -42,12 +42,12 @@ internal class DataLoadOperation: Operation {
                 }
 
                 self.image = image
-                self.completeHandler?(self.image)
+                self.updateCell?(self.image)
             }
         }
     }
 
-    private func downloadImageFrom(_ url: URL, completeHandler: @escaping (UIImage?) -> Void) {
+    private func downloadImageFrom(_ url: URL, completionHandler: @escaping (UIImage?) -> Void) {
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -55,7 +55,7 @@ internal class DataLoadOperation: Operation {
                 let data = data, error == nil,
                 let _image = UIImage(data: data)
                 else { return }
-            completeHandler(_image)
+            completionHandler(_image)
             }.resume()
     }
 }

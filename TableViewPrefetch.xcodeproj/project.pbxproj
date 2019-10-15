@@ -95,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				2F10E0CB21BAEA2000F57B85 /* Robohash.swift */,
-				6E83390D2349818E000358D4 /* DataLoadOperation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -139,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				2F10E0C921BAE9E100F57B85 /* RobohashService.swift */,
+				6E83390D2349818E000358D4 /* DataLoadOperation.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
