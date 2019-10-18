@@ -34,16 +34,8 @@ internal class RobohashViewController: UIViewController {
             self?.update(cell, with: image, at: indexPath)
         }
 
-        if let data = images[indexPath] {
-            if let image = data.image {
-                update(cell, with: image, at: indexPath)
-            } else {
-                data.updateCell = updateCell
-            }
-        } else {
-            loadImage(at: indexPath, isUpdated: true) { data in
-                data?.updateCell = updateCell
-            }
+        loadImage(at: indexPath, isUpdated: true) { data in
+            data?.updateCell = updateCell
         }
     }
 
