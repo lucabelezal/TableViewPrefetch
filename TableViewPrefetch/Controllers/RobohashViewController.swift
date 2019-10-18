@@ -41,31 +41,33 @@ internal class RobohashViewController: UIViewController {
                 data.updateCell = updateCell
             }
         } else {
-            prefetchData(at: indexPath)
-
-            if let data = images[indexPath] {
-                data.updateCell = updateCell
+            loadImage(at: indexPath, isUpdated: true) { data in
+                data?.updateCell = updateCell
             }
         }
     }
 
-    private func update(_ cell: RobohashTableViewCell, with image: UIImage?, at indexPath: IndexPath) {
-        cell.configureCell(with: image)
-        images.removeValue(forKey: indexPath)
+    private func loadImage(at indexPath: IndexPath, isUpdated: Bool = false, updateCell: ((DataLoadOperation?) -> Void)?) {
+        if let data = service.loadImage(at: indexPath.row) {
+            operationQueue.addOperation(data)
+            images[indexPath] = data
+
+            if isUpdated {
+                updateCell?(data)
+            }
+        }
     }
 
-    private func cancelPrefetching(at indexPath: IndexPath) {
+    private func cancelLoadImage(at indexPath: IndexPath) {
         if let data = images[indexPath] {
             data.cancel()
             images.removeValue(forKey: indexPath)
         }
     }
 
-    private func prefetchData(at indexPath: IndexPath) {
-        if let data = service.loadImage(at: indexPath.row) {
-            operationQueue.addOperation(data)
-            images[indexPath] = data
-        }
+    private func update(_ cell: RobohashTableViewCell, with image: UIImage?, at indexPath: IndexPath) {
+        cell.configureCell(with: image)
+        images.removeValue(forKey: indexPath)
     }
 }
 
@@ -83,7 +85,7 @@ extension RobohashViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cancelPrefetching(at: indexPath)
+        cancelLoadImage(at: indexPath)
     }
 }
 
@@ -112,14 +114,14 @@ extension RobohashViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
 
         for indexPath in indexPaths where images[indexPath] != nil {
-            prefetchData(at: indexPath)
+            loadImage(at: indexPath, updateCell: nil)
         }
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
 
         for indexPath in indexPaths {
-            cancelPrefetching(at: indexPath)
+            cancelLoadImage(at: indexPath)
         }
     }
 }
