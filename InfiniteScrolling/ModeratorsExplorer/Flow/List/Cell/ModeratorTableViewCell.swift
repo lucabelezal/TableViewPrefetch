@@ -9,17 +9,17 @@
 import UIKit
 
 class ModeratorTableViewCell: UITableViewCell {
-    
+
   @IBOutlet var displayNameLabel: UILabel!
   @IBOutlet var reputationLabel: UILabel!
   @IBOutlet var reputationContainerView: UIView!
   @IBOutlet var indicatorView: UIActivityIndicatorView!
-  
+
   override func prepareForReuse() {
     super.prepareForReuse()
     configure(with: .none)
   }
-  
+
   override func awakeFromNib() {
     super.awakeFromNib()
     reputationContainerView.backgroundColor = .lightGray
@@ -27,7 +27,7 @@ class ModeratorTableViewCell: UITableViewCell {
     indicatorView.hidesWhenStopped = true
     indicatorView.color = ColorPalette.RWGreen
   }
-  
+
   func configure(with moderator: Moderator?) {
     if let moderator = moderator {
       displayNameLabel?.text = moderator.displayName

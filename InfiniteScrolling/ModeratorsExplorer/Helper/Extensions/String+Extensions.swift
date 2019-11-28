@@ -9,11 +9,11 @@
 import Foundation
 
 extension String {
-    
+
   var localizedString: String {
     return NSLocalizedString(self, comment: "")
   }
-  
+
   var htmlToString: String {
     guard
       let data = data(using: .utf8),

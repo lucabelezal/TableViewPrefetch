@@ -11,7 +11,7 @@ import Foundation
 enum DataResponseError: Error {
     case network
     case decoding
-    
+
     var reason: String {
         switch self {
         case .network:
