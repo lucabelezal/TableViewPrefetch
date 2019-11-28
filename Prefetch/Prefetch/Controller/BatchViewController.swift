@@ -58,10 +58,8 @@ class BatchViewController: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-
         }.resume()
     }
-
 }
 
 extension BatchViewController: UITableViewDataSource {
@@ -86,5 +84,4 @@ extension BatchViewController: UITableViewDataSource {
         cell.configureCell(with: coin)
         return cell
     }
-
 }

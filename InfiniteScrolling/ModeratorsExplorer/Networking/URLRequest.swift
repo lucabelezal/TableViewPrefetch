@@ -32,7 +32,6 @@ extension URLRequest {
 
             encodedURLRequest.url = newUrlComponents.url
             return encodedURLRequest
-
         } else {
             return self
         }

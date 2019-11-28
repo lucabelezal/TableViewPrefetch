@@ -29,5 +29,4 @@ class CoinTableViewCell: UITableViewCell {
         self.rankLabel.text = "# \(coin.rank)"
         self.priceLabel.text = "$ \(coin.quotes["USD"]!.price)"
     }
-
 }

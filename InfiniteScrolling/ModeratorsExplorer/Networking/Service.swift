@@ -26,7 +26,7 @@ final class Service {
 
         let urlRequest = URLRequest(url: baseURL.appendingPathComponent(router.path))
         let parameters = ["page": "\(page)"].merging(router.parameters, uniquingKeysWith: +)
-        let encodedURLRequest  = urlRequest.encode(with: parameters)
+        let encodedURLRequest = urlRequest.encode(with: parameters)
 
         session.dataTask(with: encodedURLRequest) { (data, response, _) in
 
@@ -42,8 +42,6 @@ final class Service {
             }
 
             completion(Result.success(decodedResponse))
-
         }.resume()
     }
-
 }

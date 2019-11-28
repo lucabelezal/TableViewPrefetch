@@ -21,5 +21,4 @@ extension UITextField {
     layer.shadowOpacity = 1.0
     layer.shadowRadius = 0.0
   }
-
 }

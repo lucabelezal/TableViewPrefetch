@@ -25,5 +25,4 @@ class PostTableViewCell: UITableViewCell {
         self.titleLabel.text = post.title
         self.bodyLabel.text = post.body
     }
-
 }

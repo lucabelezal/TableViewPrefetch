@@ -53,9 +53,7 @@ class ViewController: UIViewController {
                 self.tableView.reloadData()
             }
         }.resume()
-
     }
-
 }
 
 extension ViewController: UITableViewDataSource {
@@ -71,5 +69,4 @@ extension ViewController: UITableViewDataSource {
         cell.configureCell(with: post)
         return cell
     }
-
 }

@@ -43,13 +43,10 @@ class PrefetchViewController: UIViewController {
     }
 
     func fetchNews(of index: Int) {
-
     }
 
     func cancelFetchNews(of index: Int) {
-
     }
-
 }
 
 extension PrefetchViewController: UITableViewDataSource {
@@ -63,13 +60,10 @@ extension PrefetchViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuse.news.identifier, for: indexPath) as! NewsTableViewCell
         return cell
     }
-
 }
 
 extension PrefetchViewController: UITableViewDataSourcePrefetching {
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-
     }
-
 }

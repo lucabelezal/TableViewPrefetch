@@ -33,5 +33,4 @@ class NewsTableViewCell: UITableViewCell {
         self.urlLabel.text = "Loading..."
         self.authorLabel.text = "Loading..."
     }
-
 }

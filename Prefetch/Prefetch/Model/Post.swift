@@ -21,5 +21,4 @@ struct Post: Decodable {
         case title
         case body
     }
-
 }

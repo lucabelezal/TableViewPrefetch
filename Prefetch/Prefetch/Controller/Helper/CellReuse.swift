@@ -39,5 +39,4 @@ public enum CellReuse {
             return "coinCell"
         }
     }
-
 }
