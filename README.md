@@ -6,7 +6,7 @@ branches:
   - Examples: Load All, Batch and Prefetch
   
 * **infiniteScrolling**
-  - prefetching with infinite scrolling
+  - Prefetching with infinite scrolling
   
 * **master/defaultImplementation**
   - Implementation with Operation and OperationQueue
