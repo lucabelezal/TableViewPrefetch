@@ -2,13 +2,13 @@
 
 branches:
 
-* prefetch
+* **prefetch**
   - Examples: Load All, Batch and Prefetch
   
-* infiniteScrolling
+* **infiniteScrolling**
   - prefetching with infinite scrolling
   
-* master/defaultImplementation
+* **master/defaultImplementation**
   - Implementation with Operation and OperationQueue
 
 
