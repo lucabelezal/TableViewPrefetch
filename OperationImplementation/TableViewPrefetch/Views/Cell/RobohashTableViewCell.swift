@@ -24,7 +24,7 @@ internal class RobohashTableViewCell: UITableViewCell {
             self?.displayImage(image)
         }
     }
-    
+
     private func displayImage(_ image: UIImage?) {
         if let _image = image {
             thumbImageView.image = _image

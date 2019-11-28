@@ -17,7 +17,7 @@ internal class RobohashService {
     internal var numberOfImage: Int {
         return robohashData.count
     }
-    
+
     internal func loadImage(at index: Int) -> DataLoadOperation? {
         if (0..<robohashData.count).contains(index) {
             return DataLoadOperation(robohash: robohashData[index])

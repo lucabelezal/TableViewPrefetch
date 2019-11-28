@@ -12,7 +12,7 @@ public struct Robohash {
 
     public private(set) var url: URL?
     private let order: Int
-    
+
     public init(url: String?, order: Int) {
         self.url = url?.toURL
         self.order = order

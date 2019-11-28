@@ -88,7 +88,7 @@ extension RobohashViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return service.numberOfImage
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let reusableCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
@@ -109,7 +109,7 @@ extension RobohashViewController: UITableViewDataSourcePrefetching {
             loadImage(at: indexPath, updateCell: nil)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
 
         for indexPath in indexPaths {
