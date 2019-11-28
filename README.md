@@ -1,6 +1,6 @@
 # TableViewPrefetch
 
-branches:
+projects:
 
 * **prefetch**
   - Examples: Load All, Batch and Prefetch
