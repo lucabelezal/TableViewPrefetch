@@ -2,13 +2,13 @@
 
 projects:
 
-* **prefetch**
+* **Prefetch**
   - Examples: Load All, Batch and Prefetch
   
-* **infiniteScrolling**
+* **InfiniteScrolling**
   - Prefetching with infinite scrolling
   
-* **master/defaultImplementation**
+* **OperationImplementation**
   - Implementation with Operation and OperationQueue
 
 
