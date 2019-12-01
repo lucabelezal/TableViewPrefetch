@@ -655,3 +655,5 @@ custom_rules:
     ignores_urls: true
     ignores_function_declarations: true
     ignores_interpolated_strings: true
+  colon:
+   flexible_right_spacing: true

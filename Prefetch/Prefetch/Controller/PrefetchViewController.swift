@@ -109,6 +109,14 @@ extension PrefetchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // swiftlint:disable:next force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuse.news.identifier, for: indexPath) as! NewsTableViewCell
+        
+        if let news = news[indexPath.row] {
+            cell.configureCell(with: news)
+        } else {
+            cell.truncateCell()
+            fetchNews(of: indexPath.row)
+        }
+        
         return cell
     }
 }
@@ -116,5 +124,14 @@ extension PrefetchViewController: UITableViewDataSource {
 extension PrefetchViewController: UITableViewDataSourcePrefetching {
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            fetchNews(of: indexPath.row)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            cancelFetchNews(of: indexPath.row)
+        }
     }
 }
