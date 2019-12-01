@@ -3,7 +3,7 @@
 projects:
 
 * **Prefetch**
-  - Examples: Load All, Batch and Prefetch
+  - Examples: Load All, Batch and Prefetch(infinite scrolling)
   
 * **InfiniteScrolling**
   - Prefetching with infinite scrolling
