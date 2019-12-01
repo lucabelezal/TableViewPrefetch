@@ -3,7 +3,9 @@
 projects:
 
 * **Prefetch**
-  - Examples: Load All, Batch and Prefetch(infinite scrolling)
+  - Load All 
+  - Batch(Load more when arrival last visible cell) 
+  - Prefetch(infinite scrolling)
   
 * **InfiniteScrolling**
   - Prefetching with infinite scrolling
