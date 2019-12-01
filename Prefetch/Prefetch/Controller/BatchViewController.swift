@@ -10,7 +10,7 @@ import UIKit
 
 class BatchViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
 
     let baseURL = "https://api.coinmarketcap.com/v2/ticker/?"
     let itemsPerBatch = 15
@@ -19,6 +19,7 @@ class BatchViewController: UIViewController {
     var currentRow: Int = 1
 
     var url: URL {
+        // swiftlint:disable:next force_unwrapping
         return URL(string: "\(baseURL)start=\(currentRow)&limit=\(itemsPerBatch)")!
     }
 
@@ -73,7 +74,7 @@ extension BatchViewController: UITableViewDataSource {
         if indexPath.row == coins.count {
             // swiftlint:disable:next force_cast
             let cell = tableView.dequeueReusableCell(withIdentifier: CellReuse.loading.identifier, for: indexPath) as! LoadingTableViewCell
-            cell.activityIndicator.startAnimating()
+            cell.loadingView.startAnimating()
             loadData()
             return cell
         }

@@ -148,8 +148,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6E45F9B1237F39B700509B25 /* Build configuration list for PBXNativeTarget "Prefetch" */;
 			buildPhases = (
-				6EF860A0238F8196002B580A /* Lint */,
 				6E45F999237F39B300509B25 /* Sources */,
+				6EF860A0238F8196002B580A /* Lint */,
 				6E45F99A237F39B300509B25 /* Frameworks */,
 				6E45F99B237F39B300509B25 /* Resources */,
 			);

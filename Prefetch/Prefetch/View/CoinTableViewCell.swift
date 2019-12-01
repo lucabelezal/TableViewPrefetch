@@ -10,10 +10,10 @@ import UIKit
 
 class CoinTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var symbolLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var rankLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var symbolLabel: UILabel!
+    @IBOutlet private weak var priceLabel: UILabel!
+    @IBOutlet private weak var rankLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,6 +27,6 @@ class CoinTableViewCell: UITableViewCell {
         self.nameLabel.text = coin.name
         self.symbolLabel.text = coin.symbol
         self.rankLabel.text = "# \(coin.rank)"
-        self.priceLabel.text = "$ \(coin.quotes["USD"]!.price)"
+        self.priceLabel.text = "$ \(String(describing: coin.quotes["USD"]?.price))"
     }
 }

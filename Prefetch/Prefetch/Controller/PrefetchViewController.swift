@@ -9,12 +9,12 @@
 import UIKit
 
 class PrefetchViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-
+    
+    @IBOutlet private weak var tableView: UITableView!
+    
     var news: [News?] = [News?](repeating: nil, count: 100)
     var dataTasks: [URLSessionDataTask] = []
-
+    
     let newsIDs = [
         17550600, 17549050, 17550761, 17550837, 17549099, 17548768, 17550808, 17550315, 17551012, 17546915,
         17546491, 17534858, 17544666, 17550754, 17540464, 17540205, 17544687, 17548807, 17542051, 17550532,
@@ -27,12 +27,12 @@ class PrefetchViewController: UIViewController {
         17532682, 17540263, 17536291, 17534950, 17522362, 17539286, 17538697, 17541065, 17538453, 17542864,
         17542556, 17539595, 17538770, 17537250, 17547092, 17541092, 17535909, 17534923, 17543925, 17538261
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-
+    
     func setupView() {
         tableView.register(UINib(nibName: CellReuse.loading.name, bundle: nil), forCellReuseIdentifier: CellReuse.loading.identifier)
         tableView.register(UINib(nibName: CellReuse.news.name, bundle: nil), forCellReuseIdentifier: CellReuse.news.identifier)
@@ -41,20 +41,71 @@ class PrefetchViewController: UIViewController {
         tableView.dataSource = self
         tableView.prefetchDataSource = self
     }
-
+    
     func fetchNews(of index: Int) {
+        let newsID = newsIDs[index]
+        
+        guard let url = URL(string: "https://hacker-news.firebaseio.com/v0/item/\(newsID).json") else {
+            print("No news ID")
+            return
+        }
+        
+        if dataTasks.contains(where: { task in task.originalRequest?.url == url }) {
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { data, _, _ in
+            
+            guard let data = data else {
+                print("No data")
+                return
+            }
+            
+            guard let news = try? JSONDecoder().decode(News.self, from: data) else {
+                print("Error: Couldn't decode data into news")
+                return
+            }
+            
+            self.news[index] = news
+            
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(row: index, section: 0)
+                
+                if self.tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
+                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                }
+            }
+        }
+        
+        dataTask.resume()
+        dataTasks.append(dataTask)
     }
-
+    
     func cancelFetchNews(of index: Int) {
+        let newsID = newsIDs[index]
+        
+        guard let url = URL(string: "https://hacker-news.firebaseio.com/v0/item/\(newsID).json") else {
+            print("No news ID")
+            return
+        }
+        
+        guard let dataTaskIndex = dataTasks.firstIndex(where: { task in task.originalRequest?.url == url }) else {
+            return
+        }
+        
+        let dataTask = dataTasks[dataTaskIndex]
+        
+        dataTask.cancel()
+        dataTasks.remove(at: dataTaskIndex)
     }
 }
 
 extension PrefetchViewController: UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return news.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // swiftlint:disable:next force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: CellReuse.news.identifier, for: indexPath) as! NewsTableViewCell
@@ -63,7 +114,7 @@ extension PrefetchViewController: UITableViewDataSource {
 }
 
 extension PrefetchViewController: UITableViewDataSourcePrefetching {
-
+    
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
     }
 }

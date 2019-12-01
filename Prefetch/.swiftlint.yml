@@ -159,6 +159,7 @@ disabled_rules: # rule identifiers to exclude from running
   # Rationale: Xcode auto indentation can cause this warning
   # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-whitespace
   - trailing_whitespace
+  - ignores_empty_lines
 
   # Rationale: Arbitrary restriction
   # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-body-length
@@ -609,6 +610,7 @@ opt_in_rules: # some rules are only opt-in
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
   - Pods
+  - Prefetch/SceneDelegate.swift
 
 file_header:
   required_pattern: |

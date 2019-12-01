@@ -10,8 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var loadingActivityIndicator: UIActivityIndicatorView!
 
     var posts: [Post] = []
 
@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     }
 
     func loadData() {
+        // swiftlint:disable:next force_unwrapping
         let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
 
         URLSession(configuration: URLSessionConfiguration.default).dataTask(with: url) { data, _, _ in
