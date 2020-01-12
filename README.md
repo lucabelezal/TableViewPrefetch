@@ -5,7 +5,7 @@ projects:
 * **Prefetch**
   - Load All 
   - Batch(Load more when arrival last visible cell) 
-  - Prefetch(infinite scrolling)
+  - Prefetch(infinite scrolling, another aproach)
   
 * **InfiniteScrolling**
   - Prefetching with infinite scrolling
