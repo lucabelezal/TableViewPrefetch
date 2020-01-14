@@ -15,7 +15,6 @@ public class LayoutViewConstraintSafeArea {
     internal required init(view: LayoutView) {
         self.view = view
     }
-
 }
 
 public extension LayoutViewConstraintSafeArea {

@@ -13,9 +13,9 @@ protocol ModeratorsListViewDelegate: class {
 }
 
 class ModeratorsListView: UIView {
-
+    
     typealias Cell = TableViewCell<ModeratorCellView, ModeratorCellViewModelProtocol>
-
+    
     weak var delegate: ModeratorsListViewDelegate?
     
     var viewModel: ModeratorsListViewModelProtocol {
@@ -23,7 +23,7 @@ class ModeratorsListView: UIView {
             update()
         }
     }
-
+    
     private let indicatorView: UIActivityIndicatorView
     private let tableView: UITableView
     
@@ -35,19 +35,19 @@ class ModeratorsListView: UIView {
         setupView()
         startAnimating()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func update() {
         guard let newIndexPathsToReload = viewModel.indexPathsToReload else {
-          stopAnimating()
-          tableView.isHidden = false
-          tableView.reloadData()
-          return
+            stopAnimating()
+            tableView.isHidden = false
+            tableView.reloadData()
+            return
         }
-
+        
         let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
         tableView.beginUpdates()
         tableView.reloadRows(at: indexPathsToReload, with: .fade)
@@ -64,7 +64,7 @@ class ModeratorsListView: UIView {
 }
 
 extension ModeratorsListView: ViewCodable {
-
+    
     func configure() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,13 +74,13 @@ extension ModeratorsListView: ViewCodable {
         tableView.isHidden = true
         tableView.register(cellType: Cell.self)
     }
-
+    
     func hierarchy() {
         addView(indicatorView, tableView)
     }
-
+    
     func constraints() {
-
+        
         indicatorView.layout.makeConstraints { make in
             make.centerX.equalTo(layout.centerX)
             make.centerY.equalTo(layout.centerY)
@@ -93,56 +93,54 @@ extension ModeratorsListView: ViewCodable {
             make.right.equalTo(self.layout.right)
         }
     }
-
+    
     func styles() {
         backgroundColor = .lightGray
         tableView.backgroundColor = .clear
         indicatorView.color = .black
     }
-    
 }
 
-extension ModeratorsListView: UITableViewDataSource, UITableViewDelegate {
-
+extension ModeratorsListView: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.totalCount
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: Cell = tableView.dequeueReusableCell(for: indexPath)
-        if isLoadingCell(for: indexPath) {
-            cell.viewModel = ModeratorCellViewModel(with: .none)
-        } else {
+        if !isLoadingCell(for: indexPath) {
             cell.viewModel = viewModel.moderator(indexPath.row)
         }
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension ModeratorsListView: UITableViewDataSourcePrefetching {
     
-  func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-    if indexPaths.contains(where: isLoadingCell) {
-        delegate?.fetchNextPage()
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            delegate?.fetchNextPage()
+        }
     }
-  }
+}
+
+extension ModeratorsListView: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 private extension ModeratorsListView {
     
-  func isLoadingCell(for indexPath: IndexPath) -> Bool {
-    return indexPath.row >= viewModel.currentCount
-  }
-
-  func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
-    let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
-    let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
-    return Array(indexPathsIntersection)
-  }
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= viewModel.currentCount
+    }
     
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
+    }
 }

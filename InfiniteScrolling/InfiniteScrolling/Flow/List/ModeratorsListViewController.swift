@@ -39,7 +39,6 @@ class ModeratorsListViewController: UIViewController, AlertDisplayer {
         view = ModeratorsListView(frame: .zero)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()

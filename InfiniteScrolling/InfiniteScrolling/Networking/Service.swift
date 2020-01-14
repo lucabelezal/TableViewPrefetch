@@ -10,8 +10,8 @@ import Foundation
 
 final class Service {
 
-    private lazy var baseURL: URL = {
-      return URL(string: "https://api.stackexchange.com/2.2/")!
+    private lazy var baseURL: URL? = {
+      return URL(string: "https://api.stackexchange.com/2.2/")
     }()
 
     let session: URLSession
@@ -24,7 +24,11 @@ final class Service {
                          page: Int,
                          completion: @escaping (Result<ModeratorData, DataResponseError>) -> Void) {
 
-        let urlRequest = URLRequest(url: baseURL.appendingPathComponent(router.path))
+        guard let url = baseURL?.appendingPathComponent(router.path) else {
+            return
+        }
+        
+        let urlRequest = URLRequest(url: url)
         let parameters = ["page": "\(page)"].merging(router.parameters, uniquingKeysWith: +)
         let encodedURLRequest = urlRequest.encode(with: parameters)
         print(encodedURLRequest)

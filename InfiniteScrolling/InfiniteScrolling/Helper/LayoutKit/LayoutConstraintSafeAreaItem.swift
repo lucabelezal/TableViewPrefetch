@@ -19,5 +19,4 @@ public class LayoutConstraintSafeAreaItem: LayoutConstraintItemable, LayoutConst
         self.attribute = attribute
         self.isSafeArea = true
     }
-
 }

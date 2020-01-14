@@ -28,5 +28,4 @@ public extension LayoutView {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
     }
-
 }

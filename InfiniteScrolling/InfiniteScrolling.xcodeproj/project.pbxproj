@@ -278,6 +278,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EDFBAF923CA21C1007A32DD /* Build configuration list for PBXNativeTarget "InfiniteScrolling" */;
 			buildPhases = (
+				6E36346323CE652F00D77EF3 /* Lint */,
 				6EDFBAE123CA21BB007A32DD /* Sources */,
 				6EDFBAE223CA21BB007A32DD /* Frameworks */,
 				6EDFBAE323CA21BB007A32DD /* Resources */,
@@ -335,6 +336,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6E36346323CE652F00D77EF3 /* Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Lint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6EDFBAE123CA21BB007A32DD /* Sources */ = {

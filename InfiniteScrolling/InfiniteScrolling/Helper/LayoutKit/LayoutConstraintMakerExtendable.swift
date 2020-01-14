@@ -10,21 +10,21 @@ import CoreGraphics
 import Foundation
 
 public class LayoutConstraintMakerExtendable {
-
+    
     internal let view: LayoutView
     internal let attribute: LayoutAttribute
-
+    
     internal required init(view: LayoutView, attribute: LayoutAttribute) {
         self.view = view
         self.attribute = attribute
     }
-
+    
     internal func configureView(_ constraintType: LayoutConstraintType, constant: CGFloat, layout: LayoutConstraintItemable) -> LayoutConstraint {
-
+        
         guard let layoutConfiguration = layout as? LayoutConstraintItemConfigurable else {
             fatalError("LayoutItem not implement LayoutConstraintItemConfigurable")
         }
-
+        
         switch attribute {
         case .left:
             if constraintType == .equalTo {
@@ -110,11 +110,10 @@ public class LayoutConstraintMakerExtendable {
             fatalError("Layout attribute not implemented (Yet!)")
         }
     }
-
 }
 
 internal extension LayoutConstraintMakerExtendable {
-
+    
     func configure(layoutX item: LayoutConstraintItemConfigurable) -> LayoutXAnchor {
         switch item.attribute {
         case .left:
@@ -146,7 +145,7 @@ internal extension LayoutConstraintMakerExtendable {
             fatalError("Use LayoutXAnchor only with: left, right, leading, trailing and centerX")
         }
     }
-
+    
     func configure(layoutY item: LayoutConstraintItemConfigurable) -> LayoutYAnchor {
         switch item.attribute {
         case .top:
@@ -168,7 +167,7 @@ internal extension LayoutConstraintMakerExtendable {
             fatalError("Use LayoutYAnchor only with: top, bottom and centerY")
         }
     }
-
+    
     func configure(dimension item: LayoutConstraintItemConfigurable) -> LayoutDimensionAnchor {
         switch item.attribute {
         case .height:
@@ -185,21 +184,18 @@ internal extension LayoutConstraintMakerExtendable {
             fatalError("Use LayoutDimensionAnchor only with: height and width")
         }
     }
-
 }
 
 extension LayoutConstraintMakerExtendable: LayoutConstraintMakerRelatable {
-
-    @discardableResult
-    public func equalTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func equalTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
         let constantAnchor: LayoutConstraint = configureView(.equalTo, constant: constant, layout: item)
         constantAnchor.priority = LayoutPriortizable.required.priorityValue
         constantAnchor.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
-    @discardableResult
-    public func equalTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func equalTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
         var constantAnchor: LayoutConstraint?
         switch attribute {
         case .width:
@@ -213,17 +209,15 @@ extension LayoutConstraintMakerExtendable: LayoutConstraintMakerRelatable {
         constantAnchor?.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
-    @discardableResult
-    public func greaterThanOrEqualTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func greaterThanOrEqualTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
         let constantAnchor: LayoutConstraint = configureView(.greaterThanOrEqualTo, constant: constant, layout: item)
         constantAnchor.priority = LayoutPriortizable.required.priorityValue
         constantAnchor.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
-    @discardableResult
-    public func greaterThanOrEqualTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func greaterThanOrEqualTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
         var constantAnchor: LayoutConstraint?
         switch attribute {
         case .width:
@@ -237,17 +231,15 @@ extension LayoutConstraintMakerExtendable: LayoutConstraintMakerRelatable {
         constantAnchor?.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
-    @discardableResult
-    public func lessThanOrEqualTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func lessThanOrEqualTo(_ item: LayoutConstraintItemable, constant: CGFloat = 0) -> LayoutConstraintMakerSupportable {
         let constantAnchor: LayoutConstraint = configureView(.lessThanOrEqualTo, constant: constant, layout: item)
         constantAnchor.priority = LayoutPriortizable.required.priorityValue
         constantAnchor.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
-    @discardableResult
-    public func lessThanOrEqualTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
+    
+    @discardableResult public func lessThanOrEqualTo(constant: CGFloat) -> LayoutConstraintMakerSupportable {
         var constantAnchor: LayoutConstraint?
         switch attribute {
         case .width:
@@ -261,5 +253,4 @@ extension LayoutConstraintMakerExtendable: LayoutConstraintMakerRelatable {
         constantAnchor?.isActive = true
         return LayoutConstraintMakerSupportable(constant: constantAnchor)
     }
-
 }

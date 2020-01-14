@@ -27,7 +27,6 @@ public class LayoutViewConstraint {
         }
         return view
     }
-
 }
 
 public extension LayoutViewConstraint {
@@ -75,5 +74,4 @@ public extension LayoutViewConstraint {
     var safeArea: LayoutViewConstraintSafeArea {
         return LayoutViewConstraintSafeArea(view: view)
     }
-
 }

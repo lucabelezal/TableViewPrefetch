@@ -12,6 +12,16 @@ class TableViewCell<View: UIView, ViewModel>: UITableViewCell, Reusable where Vi
 
     var customView: View
 
+    final var viewModel: ViewModel? {
+        get {
+            return customView.viewModel
+        }
+
+        set(newViewModel) {
+            customView.viewModel = newViewModel
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         customView = View()
 
@@ -38,19 +48,8 @@ class TableViewCell<View: UIView, ViewModel>: UITableViewCell, Reusable where Vi
         fatalError("init(coder:) has not been implemented")
     }
 
-    final var viewModel: ViewModel? {
-        get {
-            return customView.viewModel
-        }
-
-        set(newViewModel) {
-            customView.viewModel = newViewModel
-        }
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         customView.isSelected = selected
     }
-    
 }

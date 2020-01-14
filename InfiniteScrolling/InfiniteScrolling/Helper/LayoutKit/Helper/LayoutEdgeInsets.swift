@@ -39,5 +39,4 @@ public enum LayoutEdgeInsets {
             return window.safeAreaInsets.top
         }
     }
-
 }

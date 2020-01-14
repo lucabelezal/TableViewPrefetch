@@ -51,7 +51,6 @@ public extension UICollectionView {
                 withReuseIdentifier: supplementaryViewType.reuseIdentifier
             )
     }
-    
 
     final func dequeueReusableSupplementaryView<T: UICollectionReusableView>
         (ofKind elementKind: String, for indexPath: IndexPath, viewType: T.Type = T.self) -> T

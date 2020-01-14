@@ -9,16 +9,15 @@
 import Foundation
 
 struct ModeratorData: Decodable {
-
-  let moderators: [Moderator]
-  let total: Int
-  let hasMore: Bool
-  let page: Int
-
-  enum CodingKeys: String, CodingKey {
-    case moderators = "items"
-    case hasMore = "has_more"
-    case total
-    case page
-  }
+    
+    enum CodingKeys: String, CodingKey {
+        case moderators = "items"
+        case hasMore = "has_more"
+        case total
+        case page
+    }
+    
+    let moderators: [Moderator]
+    let hasMore: Bool
+    let total, page: Int
 }

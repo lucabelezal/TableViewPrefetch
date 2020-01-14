@@ -45,5 +45,4 @@ struct ModeratorsListViewModel: ModeratorsListViewModelProtocol {
       let endIndex = startIndex + newModerators.count
       return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
-    
 }

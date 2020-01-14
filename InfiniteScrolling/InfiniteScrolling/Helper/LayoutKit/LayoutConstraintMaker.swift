@@ -15,7 +15,6 @@ public class LayoutConstraintMaker {
     internal required init(view: LayoutView) {
         self.view = view
     }
-
 }
 
 public extension LayoutConstraintMaker {
@@ -59,5 +58,4 @@ public extension LayoutConstraintMaker {
     var trailing: LayoutConstraintMakerExtendable {
         return LayoutConstraintMakerExtendable(view: view, attribute: .trailing)
     }
-
 }

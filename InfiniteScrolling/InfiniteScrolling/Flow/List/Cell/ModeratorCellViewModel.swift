@@ -10,7 +10,7 @@ import UIKit
 
 protocol ModeratorCellViewModelProtocol {
     var displayName: String? { get }
-    var reputation : String? { get }
+    var reputation: String? { get }
 }
 
 struct ModeratorCellViewModel: ModeratorCellViewModelProtocol {

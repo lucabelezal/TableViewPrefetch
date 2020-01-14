@@ -19,5 +19,4 @@ public class LayoutConstraintItem: LayoutConstraintItemable, LayoutConstraintIte
         self.attribute = attribute
         self.isSafeArea = false
     }
-
 }
