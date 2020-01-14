@@ -79,10 +79,10 @@ extension ModeratorCellView: ViewCodable {
         }
         
         reputationLabel.layout.makeConstraints { make in
-            make.top.equalTo(reputationContainerView.layout.top)
-            make.bottom.equalTo(reputationContainerView.layout.bottom)
-            make.left.equalTo(reputationContainerView.layout.left)
-            make.right.equalTo(reputationContainerView.layout.right)
+            make.top.equalTo(reputationContainerView.layout.top, constant: 8)
+            make.bottom.equalTo(reputationContainerView.layout.bottom, constant: -8)
+            make.left.equalTo(reputationContainerView.layout.left, constant: 8)
+            make.right.equalTo(reputationContainerView.layout.right, constant: -8)
         }
     }
     

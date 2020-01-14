@@ -27,12 +27,10 @@ final class Service {
         let urlRequest = URLRequest(url: baseURL.appendingPathComponent(router.path))
         let parameters = ["page": "\(page)"].merging(router.parameters, uniquingKeysWith: +)
         let encodedURLRequest = urlRequest.encode(with: parameters)
-
-        session.dataTask(with: encodedURLRequest) { (data, response, _) in
-
+        print(encodedURLRequest)
+        session.dataTask(with: encodedURLRequest) { (data, response, _) in            
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.hasSuccessStatusCode, let data = data else {
-
                     return completion(Result.failure(DataResponseError.network))
             }
 
@@ -40,7 +38,11 @@ final class Service {
                 completion(Result.failure(DataResponseError.decoding))
                 return
             }
-
+            
+            if let log = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                print(log)
+            }
+            
             completion(Result.success(decodedResponse))
         }.resume()
     }

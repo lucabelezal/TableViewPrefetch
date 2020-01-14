@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ModeratorsListViewDelegate: class {
-    func fetchNextPageOfModerators()
+    func fetchNextPage()
 }
 
 class ModeratorsListView: UIView {
@@ -18,43 +18,49 @@ class ModeratorsListView: UIView {
 
     weak var delegate: ModeratorsListViewDelegate?
     
-    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-    let tableView: UITableView = UITableView()
-
     var viewModel: ModeratorsListViewModelProtocol {
         didSet {
             update()
         }
     }
 
+    private let indicatorView: UIActivityIndicatorView
+    private let tableView: UITableView
+    
     override init(frame: CGRect) {
+        indicatorView = UIActivityIndicatorView(style: .large)
+        tableView = UITableView()
         viewModel = ModeratorsListViewModel()
         super.init(frame: frame)
         setupView()
-        
-        indicatorView.color = .black
-        indicatorView.startAnimating()
-        tableView.isHidden = true
+        startAnimating()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Private Methods
-
-    private func update() {
+    func update() {
         guard let newIndexPathsToReload = viewModel.indexPathsToReload else {
-          indicatorView.stopAnimating()
+          stopAnimating()
           tableView.isHidden = false
           tableView.reloadData()
           return
         }
 
         let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+        tableView.beginUpdates()
+        tableView.reloadRows(at: indexPathsToReload, with: .fade)
+        tableView.endUpdates()
     }
     
+    func stopAnimating() {
+        indicatorView.stopAnimating()
+    }
+    
+    func startAnimating() {
+        indicatorView.startAnimating()
+    }
 }
 
 extension ModeratorsListView: ViewCodable {
@@ -65,6 +71,7 @@ extension ModeratorsListView: ViewCodable {
         tableView.prefetchDataSource = self
         tableView.rowHeight = 60
         tableView.separatorStyle = .singleLine
+        tableView.isHidden = true
         tableView.register(cellType: Cell.self)
     }
 
@@ -77,8 +84,6 @@ extension ModeratorsListView: ViewCodable {
         indicatorView.layout.makeConstraints { make in
             make.centerX.equalTo(layout.centerX)
             make.centerY.equalTo(layout.centerY)
-            make.height.equalTo(constant: 60)
-            make.width.equalTo(constant: 60)
         }
         
         tableView.layout.makeConstraints { make in
@@ -92,6 +97,7 @@ extension ModeratorsListView: ViewCodable {
     func styles() {
         backgroundColor = .lightGray
         tableView.backgroundColor = .clear
+        indicatorView.color = .black
     }
     
 }
@@ -121,7 +127,7 @@ extension ModeratorsListView: UITableViewDataSourcePrefetching {
     
   func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
     if indexPaths.contains(where: isLoadingCell) {
-        delegate?.fetchNextPageOfModerators()
+        delegate?.fetchNextPage()
     }
   }
     
