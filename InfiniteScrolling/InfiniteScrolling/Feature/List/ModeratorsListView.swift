@@ -111,7 +111,9 @@ extension ModeratorsListView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: Cell = tableView.dequeueReusableCell(for: indexPath)
-        if !isLoadingCell(for: indexPath) {
+        if isLoadingCell(for: indexPath) {
+            cell.viewModel = ModeratorCellViewModel(with: .none)
+        } else {
             cell.viewModel = viewModel.moderator(indexPath.row)
         }
         return cell
