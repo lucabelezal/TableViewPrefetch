@@ -47,11 +47,13 @@ class ModeratorsListView: UIView {
             tableView.reloadData()
             return
         }
-        
-        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-        tableView.beginUpdates()
-        tableView.reloadRows(at: indexPathsToReload, with: .fade)
-        tableView.endUpdates()
+
+        UIView.transition(with: tableView, duration: 0, options: [], animations: {
+            let indexPathsToReload = self.visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
+            self.tableView.beginUpdates()
+            self.tableView.reloadRows(at: indexPathsToReload, with: .none)
+            self.tableView.endUpdates()
+        }, completion: nil)
     }
     
     func stopAnimating() {

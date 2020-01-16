@@ -128,7 +128,7 @@
 		6EDFBAE723CA21BB007A32DD /* InfiniteScrolling */ = {
 			isa = PBXGroup;
 			children = (
-				6EDFBB4223CA255F007A32DD /* Flow */,
+				6EDFBB4223CA255F007A32DD /* Feature */,
 				6EDFBB3123CA2557007A32DD /* Models */,
 				6EDFBB3523CA2557007A32DD /* Networking */,
 				6EDFBB0023CA242E007A32DD /* Helper */,
@@ -243,12 +243,12 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		6EDFBB4223CA255F007A32DD /* Flow */ = {
+		6EDFBB4223CA255F007A32DD /* Feature */ = {
 			isa = PBXGroup;
 			children = (
 				6EDFBB4A23CA263D007A32DD /* List */,
 			);
-			path = Flow;
+			path = Feature;
 			sourceTree = "<group>";
 		};
 		6EDFBB4923CA2637007A32DD /* Cell */ = {
