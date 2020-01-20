@@ -18,12 +18,16 @@ class ModeratorCellView: UIView, ViewModelOwner {
         }
     }
     
-    let reputationContainerView: UIView = UIView()
-    let displayNameLabel: UILabel = UILabel()
-    let reputationLabel: UILabel = UILabel()
-    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+    let reputationContainerView: UIView
+    let displayNameLabel: UILabel
+    let reputationLabel: UILabel
+    let indicatorView: UIActivityIndicatorView
     
     override init(frame: CGRect) {
+        self.reputationContainerView = UIView()
+        self.displayNameLabel = UILabel()
+        self.reputationLabel = UILabel()
+        self.indicatorView = UIActivityIndicatorView()
         super.init(frame: frame)
         setupView()
     }
@@ -34,15 +38,15 @@ class ModeratorCellView: UIView, ViewModelOwner {
     
     func update() {
         if let displayName = viewModel?.displayName, let reputation = viewModel?.reputation {
-          displayNameLabel.text = displayName
-          reputationLabel.text = reputation
-          displayNameLabel.alpha = 1
-          reputationContainerView.alpha = 1
-          indicatorView.stopAnimating()
+            displayNameLabel.text = displayName
+            reputationLabel.text = reputation
+            displayNameLabel.alpha = 1
+            reputationContainerView.alpha = 1
+            indicatorView.stopAnimating()
         } else {
-          displayNameLabel.alpha = 0
-          reputationContainerView.alpha = 0
-          indicatorView.startAnimating()
+            displayNameLabel.alpha = 0
+            reputationContainerView.alpha = 0
+            indicatorView.startAnimating()
         }
     }
 }
@@ -70,7 +74,7 @@ extension ModeratorCellView: ViewCodable {
             make.left.equalTo(layout.left, constant: 16)
             make.right.greaterThanOrEqualTo(indicatorView.layout.left, constant: -16)
         }
-                
+        
         reputationContainerView.layout.makeConstraints { make in
             make.top.equalTo(layout.top, constant: 16)
             make.bottom.equalTo(layout.bottom, constant: -16)
